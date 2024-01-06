@@ -1,10 +1,10 @@
 # Rugpi Extra
 
-🚧 **External repositories are work-in-progress. For the moment, do not expect them to work!**
+🚧 **External repositories are experimental!**
 
-**Additional recipes, collections, and layers for [Rugpi](https://rugpi.io).**
+**Additional recipes and layers for [Rugpi](https://rugpi.io).**
 
-To make the recipes, collections, and layers available, include the following in your `rugpi-bakery.toml`:
+To make the recipes and layers available, include the following in your `rugpi-bakery.toml`:
 
 ```toml
 [repositories]
