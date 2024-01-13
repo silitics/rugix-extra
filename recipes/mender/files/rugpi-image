@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -euo pipefail
+
+STATE="$1"
+FILES="$2"
+
+case "$STATE" in
+    ArtifactInstall)
+        IMG=$(find "${FILES}" -name "*.img" -type f -print -quit)
+        mkdir -p /run/rugpi/data/mender
+        rugpi-ctrl system commit >/run/rugpi/data/mender/update.log 2>&1
+        rugpi-ctrl update install --no-reboot "${IMG}" >>/run/rugpi/data/mender/update.log 2>&1
+        touch /run/rugpi/.mender-reboot-spare
+        ;;
+    NeedsArtifactReboot)
+        echo "Automatic"
+        ;;
+    ArtifactVerifyReboot)
+        spare=$(rugpi-ctrl system info | grep Spare | xargs | awk '{print $2}')
+        hot=$(rugpi-ctrl system info | grep Hot | xargs | awk '{print $2}')
+        if [ "${spare}" != "${hot}" ]; then
+            # The spare partition should be the hot one after a successful update.
+            exit 1;
+        fi
+        ;;
+    ArtifactCommit)
+        mkdir -p /run/rugpi/data/mender
+        rugpi-ctrl system commit >/run/rugpi/data/mender/commit.log 2>&1
+        ;;
+esac
+
+exit 0
