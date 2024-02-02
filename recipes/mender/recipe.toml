@@ -1,4 +1,4 @@
 description = "install Mender"
-dependencies = ["apt-update"]
+dependencies = ["core/apt-update"]
 priority = 1_000
 
