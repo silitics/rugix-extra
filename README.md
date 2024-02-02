@@ -9,12 +9,16 @@ To make the recipes and layers available, include the following in your `rugpi-b
 rugpi-extra = { git = "https://github.com/silitics/rugpi-extra.git", branch = "v0.6" }
 ```
 
+We follow [Cargo's flavor of semantic versioning](https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility).
+You can also use the most recent development version by omitting the `branch` property.
+Please be aware that this may break your builds if we introduce backwards-incompatible changes.
+
 ## 🙌 Contributions
 
-We accept pull requests adding additional recipes to `rugpi-extra` under the condition that the recipes are sufficiently general and widely applicable.
+We accept pull requests adding additional recipes to `rugpi-extra` under the condition that these recipes are sufficiently general and widely applicable.
 Please do not submit recipes for your own specific applications.
 For those, you should create a separate repository yourself.
-If you are unsure whether a recipe is suitable for `rugpi-extra`, feel free to open an issue.
+If you are unsure, feel free to open an issue.
 
 ## ⚖️ Licensing
 
