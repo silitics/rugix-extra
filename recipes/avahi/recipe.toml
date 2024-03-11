@@ -1,0 +1,6 @@
+description = "install and configure Avahi"
+
+[parameters]
+install_ssh_service = { default = false }
+install_sftp_service = { default = false }
+install_http_service = { default = false }
