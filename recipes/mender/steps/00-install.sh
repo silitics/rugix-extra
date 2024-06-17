@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 ARCH=$(dpkg --print-architecture)
 
+VERSION_CODENAME=$(. /etc/os-release; printf $VERSION_CODENAME)
+
 apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -16,7 +18,7 @@ apt-get install -y \
 curl -fsSL https://downloads.mender.io/repos/debian/gpg \
     > /etc/apt/trusted.gpg.d/mender.asc
 
-echo "deb [arch=$ARCH] https://downloads.mender.io/repos/debian debian/bullseye/stable main" \
+echo "deb [arch=$ARCH] https://downloads.mender.io/repos/debian debian/${VERSION_CODENAME}/stable main" \
     > /etc/apt/sources.list.d/mender.list
 
 apt-get update
