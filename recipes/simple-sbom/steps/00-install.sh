@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-SBOM_PATH="${RUGPI_PROJECT_DIR}${RECIPE_PARAM_SBOM_FILE}"
+SBOM_PATH="${RUGIX_PROJECT_DIR}${RECIPE_PARAM_SBOM_FILE}"
 SBOM_DIR=$(dirname "${SBOM_PATH}")
 
 if [ ! -d "${SBOM_DIR}" ]; then

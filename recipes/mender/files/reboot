@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if [ -f "/run/rugpi/.mender-reboot-spare" ]; then
+if [ -f "/run/rugix/.mender-reboot-spare" ]; then
     exec /usr/sbin/reboot "0 tryboot"
 else
     exec /usr/sbin/reboot "$@"
