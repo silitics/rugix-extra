@@ -17,10 +17,10 @@ case "$STATE" in
         echo "Automatic"
         ;;
     ArtifactVerifyReboot)
-        spare=$(rugix-ctrl system info | grep Spare | xargs | awk '{print $2}')
-        hot=$(rugix-ctrl system info | grep Hot | xargs | awk '{print $2}')
-        if [ "${spare}" != "${hot}" ]; then
-            # The spare partition should be the hot one after a successful update.
+        default_group=$(rugix-ctrl system info --json | jq -r '.boot.defaultGroup')
+        active_group=$(rugix-ctrl system info --json | jq -r '.boot.activeGroup')
+        if [ "${default_group}" != "${active_group}" ]; then
+            # The active group should not be the default after a successful update.
             exit 1;
         fi
         ;;
