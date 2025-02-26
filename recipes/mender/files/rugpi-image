@@ -10,7 +10,7 @@ case "$STATE" in
         IMG=$(find "${FILES}" -name "*.img" -type f -print -quit)
         mkdir -p /run/rugix/data/mender
         rugix-ctrl system commit >/run/rugix/data/mender/update.log 2>&1
-        rugix-ctrl update install --no-reboot "${IMG}" >>/run/rugix/data/mender/update.log 2>&1
+        rugix-ctrl update install --reboot no "${IMG}" >>/run/rugix/data/mender/update.log 2>&1
         touch /run/rugix/.mender-reboot-spare
         ;;
     NeedsArtifactReboot)
