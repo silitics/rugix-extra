@@ -6,6 +6,9 @@ STATE="$1"
 FILES="$2"
 
 case "$STATE" in
+    SupportsRollback)
+        echo "Yes"
+        ;;
     ArtifactInstall)
         IMG=$(find "${FILES}" -name "*.img" -type f -print -quit)
         mkdir -p /run/rugix/data/mender

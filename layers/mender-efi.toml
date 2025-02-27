@@ -1,0 +1,13 @@
+parent = "core/debian-bookworm"
+
+recipes = [
+    "core/debian-grub-setup",
+    "core/ssh",
+    "_mender-config",
+    "_install-test-keys",
+    "_setup-network",
+    "_rugix-system-assert",
+]
+
+[parameters."core/pkg-cleanup"]
+autoremove = true

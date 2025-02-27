@@ -1,0 +1,7 @@
+[repositories]
+rugix-extra = { path = "." }
+
+[systems.mender-efi-arm64]
+layer = "mender-efi"
+architecture = "arm64"
+target = "generic-grub-efi"

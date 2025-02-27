@@ -1,0 +1,46 @@
+[[systems]]
+system  = "mender-efi-arm64"
+ssh = { private-key = "./keys/id_rsa" }
+
+[[steps]]
+action = "run"
+description = "check system state prior to update"
+script = """
+#!/bin/bash
+set -euo pipefail
+rugix-system-assert ".boot.defaultGroup" "a"
+rugix-system-assert ".boot.activeGroup" "a"
+"""
+
+[[steps]]
+action = "run"
+description = "install a system update via Mender"
+stdin-file = "./build/mender-efi-arm64/system.mender"
+# Rebooting may cause the SSH client to disconnect while executing the script.
+may-disconnect = true
+script = """
+#!/bin/bash
+set -euo pipefail
+cat /dev/stdin >/tmp/system.mender
+mender install --reboot-exit-code /tmp/system.mender || true
+rugix-ctrl system reboot --spare
+"""
+
+[[steps]]
+action = "wait"
+duration = 10
+
+[[steps]]
+action = "run"
+description = "check whether the update has been installed"
+script = """
+#!/bin/bash
+set -euo pipefail
+rugix-system-assert ".boot.defaultGroup" "a"
+rugix-system-assert ".boot.activeGroup" "b"
+# FIXME: `mender commit` complains that there is nothing to commit ?!?!
+# rugix-ctrl system commit
+mender commit
+rugix-system-assert ".boot.defaultGroup" "b"
+rugix-system-assert ".boot.activeGroup" "b"
+"""
