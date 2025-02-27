@@ -38,8 +38,6 @@ script = """
 set -euo pipefail
 rugix-system-assert ".boot.defaultGroup" "a"
 rugix-system-assert ".boot.activeGroup" "b"
-# FIXME: `mender commit` complains that there is nothing to commit ?!?!
-# rugix-ctrl system commit
 mender commit
 rugix-system-assert ".boot.defaultGroup" "b"
 rugix-system-assert ".boot.activeGroup" "b"
