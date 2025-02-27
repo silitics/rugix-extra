@@ -19,8 +19,8 @@ case "$STATE" in
     ArtifactVerifyReboot)
         default_group=$(rugix-ctrl system info --json | jq -r '.boot.defaultGroup')
         active_group=$(rugix-ctrl system info --json | jq -r '.boot.activeGroup')
-        if [ "${default_group}" != "${active_group}" ]; then
-            # The active group should not be the default after a successful update.
+        if [ "${default_group}" == "${active_group}" ]; then
+            echo "Error: Active boot group is also the default boot group."
             exit 1;
         fi
         ;;
