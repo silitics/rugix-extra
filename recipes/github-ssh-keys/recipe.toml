@@ -1,0 +1,4 @@
+description = "add public SSH keys of GitHub users"
+
+[parameters]
+users = { }

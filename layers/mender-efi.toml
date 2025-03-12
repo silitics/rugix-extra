@@ -3,9 +3,10 @@ parent = "core/debian-bookworm"
 recipes = [
     "core/debian-grub-setup",
     "core/ssh",
+    "debian-setup-network",
+    "debian-setup-timesyncd",
     "_mender-config",
     "_install-test-keys",
-    "_setup-network",
     "_rugix-system-assert",
 ]
 
