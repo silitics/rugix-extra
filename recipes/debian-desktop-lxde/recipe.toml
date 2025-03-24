@@ -1,0 +1,2 @@
+description = "install necessary packages to run LXDE"
+dependencies = ["core/pkg-update"]
