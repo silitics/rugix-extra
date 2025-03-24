@@ -3,3 +3,4 @@ Name=en*
    
 [Network]
 DHCP=yes
+MulticastDNS=yes
