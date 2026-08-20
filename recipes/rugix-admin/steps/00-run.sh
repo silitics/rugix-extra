@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-GITHUB_REPO="rugix/rugix"
+GITHUB_REPO="rugix/rugix-admin"
 
 # Determine the Rust target triple based on architecture and libc.
 if [ "${RECIPE_PARAM_USE_MUSL}" = "true" ]; then
@@ -67,17 +67,20 @@ install_from_release() {
 
 resolve_version() {
     local source="$1"
-    # If source matches a major version prefix (e.g., "v1", "v2"), resolve via GitHub API.
-    if echo "${source}" | grep -qE '^v[0-9]+$'; then
+    # If source matches a release line prefix (e.g., "v0.5", "v1"), resolve via GitHub API.
+    if echo "${source}" | grep -qE '^v[0-9]+(\.[0-9]+)?$'; then
         echo "Resolving latest release for ${source}..." >&2
         local resolved
         resolved=$(curl -fSs "https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=100" \
-            | jq -r --arg prefix "${source}." \
-                '[.[] | select(.tag_name | startswith($prefix))]
-                 | map(.tag_name | ltrimstr("v"))
-                 | sort_by([(split("-")[0] | split(".") | map(tonumber))[], (if test("-") then 0 else 1 end)])
-                 | last
-                 | if . then "v" + . else null end')
+            | jq -r --arg prefix "${source}." '
+                [.[] | select(.tag_name | startswith($prefix)) | .tag_name | ltrimstr("v")]
+                | if any(.[]; contains("-") | not)
+                  then map(select(contains("-") | not))
+                  else .
+                  end
+                | sort_by(split("-")[0] | split(".") | map(tonumber))
+                | last
+                | if . then "v" + . else null end')
         if [ -z "${resolved}" ] || [ "${resolved}" = "null" ]; then
             echo "No release found matching '${source}.*'." >&2
             exit 1
