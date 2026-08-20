@@ -1,5 +1,5 @@
 description = "install and configure Rugix Admin"
-dependencies = ["rugix-ctrl"]
+dependencies = ["core/rugix-ctrl"]
 
 [parameters]
 # Use MUSL builds by default.
